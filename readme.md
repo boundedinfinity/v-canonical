@@ -1,3 +1,7 @@
 - https://github.com/vlang/v/tree/master/vlib
 - https://docs.vlang.io/
+    - https://docs.vlang.io/statements-&-expressions.html#for-loop
 - https://modules.vlang.io/
+    - https://modules.vlang.io/builtin.html
+    - https://modules.vlang.io/encoding.utf8.html
+    - https://modules.vlang.io/strings.html

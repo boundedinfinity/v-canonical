@@ -1,6 +1,6 @@
 module case
 
-import common.strings
+// import common.strings
 
 pub enum Case as u8 {
 	camel
@@ -14,7 +14,7 @@ pub enum Case as u8 {
 
 
 pub fn parse(s string) ?Case {
-	n := strings.lowercase(s)
+	n := s.to_lower()
 
 	match n {
 		"camel" { return Case.camel }
@@ -29,9 +29,7 @@ pub fn parse(s string) ?Case {
 }
 
 
-pub fn detect(v string) ?Case {
-	return Case.phrase
-}
+
 
 pub fn convert(case Case, v string) string {
 	return ""

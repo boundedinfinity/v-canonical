@@ -1,6 +1,5 @@
 module person
 
-import common.strings
 import canonical.id
 
 pub struct Name {
@@ -17,7 +16,7 @@ pub fn (this Name) fullname() string {
 	add := fn (mut full_names []string, names ?[]string) {
 		if ns := names {
 			if ns.len > 0 {
-				full_names << strings.join(ns, ' ')
+				full_names << ns.join(' ')
 			}
 		}
 	}
@@ -26,7 +25,7 @@ pub fn (this Name) fullname() string {
 	add(mut full_names, this.middle)
 	add(mut full_names, this.last)
 
-	return strings.join(full_names, ' ')
+	return full_names.join(' ')
 }
 
 pub struct NameFormatter {
