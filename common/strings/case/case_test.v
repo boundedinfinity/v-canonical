@@ -1,6 +1,6 @@
 module case_test
 
-import common.case
+import common.strings.case
 
 fn test_case_parse() {
 	mut actual := case.parse("snake") or { panic("parse didnt' work") }
@@ -11,6 +11,5 @@ fn test_case_parse() {
 }
 
 fn test_case_convert() {
-	mut actual := case.parse("snake") or { panic("parse didnt' work") }
-	assert actual == case.Case.snake
+	
 }

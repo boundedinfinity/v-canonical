@@ -1,11 +1,9 @@
 module strings
 
-pub type String = string
-
-pub fn (this String) uncaptialize() string {
-	match this.len {
-		0 { return this }
-		1 { return this.to_lower() }
-		else { return this[..0].to_lower() + this[1..] }
+pub fn uncapitalize(s string) string {
+	match s.len {
+		0 { return s }
+		1 { return s.to_lower() }
+		else { return s[..1].to_lower() + s[1..] }
 	}
 }
