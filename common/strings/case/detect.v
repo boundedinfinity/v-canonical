@@ -15,6 +15,10 @@ pub fn detect(v string) ?Case {
 		return Case.kabab
 	}
 
+	if !v.contains(' ') && !v.contains('-') && !v.contains('_') {
+		
+	}
+
 	return none
 }
 

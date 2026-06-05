@@ -8,11 +8,11 @@ import strings
 // ////////////////////////////////////////////////////////////////////////////////////////////////
 
 pub fn camel_to_kebab(s string) string {
-	return strings.split_capital(s).join(' ').replace(' ', '-').to_lower()
+	return  camel_to_phrase(s).replace(' ', '-')
 }
 
 pub fn camel_to_kebab_upper(s string) string {
-	return strings.split_capital(s).join(' ').replace(' ', '-').to_upper()
+	return camel_to_kebab(s).to_upper()
 }
 
 pub fn camel_to_pascal(s string) string {
@@ -28,11 +28,11 @@ pub fn camel_to_phrase_title(s string) string {
 }
 
 pub fn camel_to_snake(s string) string {
-	return strings.split_capital(s).join('_').to_lower()
+	return camel_to_phrase(s).replace(' ', '_')
 }
 
 pub fn camel_to_snake_upper(s string) string {
-	return strings.split_capital(s).join('_').to_upper()
+	return camel_to_snake(s).to_upper()
 }
 
 // ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -44,7 +44,7 @@ pub fn kebab_to_camel(s string) string {
 }
 
 pub fn kebab_to_pascal(s string) string {
-	return s.replace('-', ' ').title().replace(' ', '')
+	return kebab_to_phrase_title(s).replace(' ', '')
 }
 
 pub fn kebab_to_phrase(s string) string {
@@ -72,7 +72,7 @@ pub fn pascal_to_camel(s string) string {
 }
 
 pub fn pascal_to_kebab(s string) string {
-	return strings.split_capital(s).join('-').to_lower()
+	return pascal_to_phrase(s).replace(' ', '-')
 }
 
 pub fn pascal_to_kebab_upper(s string) string {
@@ -88,7 +88,7 @@ pub fn pascal_to_phrase_title(s string) string {
 }
 
 pub fn pascal_to_snake(s string) string {
-	return strings.split_capital(s).join('_').to_lower()
+	return pascal_to_phrase(s).replace(' ', '_')
 }
 
 pub fn pascal_to_snake_upper(s string) string {
@@ -126,3 +126,27 @@ pub fn phrase_to_snake_upper(s string) string {
 // ////////////////////////////////////////////////////////////////////////////////////////////////
 // snake
 // ////////////////////////////////////////////////////////////////////////////////////////////////
+
+pub fn snake_to_camel(s string) string {
+	return cstrings.uncapitalize(snake_to_phrase(s).title().replace(' ', ''))
+}
+
+pub fn snake_to_kabab(s string) string {
+	return s.replace('_', '-').to_lower()
+}
+
+pub fn snake_to_kabab_upper(s string) string {
+	return s.replace('_', '-').to_upper()
+}
+
+pub fn snake_to_pascal(s string) string {
+	return snake_to_phrase_title(s).replace(' ', '')
+}
+
+pub fn snake_to_phrase(s string) string {
+	return s.replace('_', ' ').to_lower()
+}
+
+pub fn snake_to_phrase_title(s string) string {
+	return s.replace('_', ' ').title()
+}

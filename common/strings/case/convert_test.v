@@ -119,4 +119,28 @@ fn test_join() {
 	assert case.pascal_to_snake_upper('AbCd') == 'AB_CD'
 	assert case.pascal_to_snake_upper('AbcD') == 'ABC_D'
 	assert case.pascal_to_snake_upper('') == ''
+
+	assert case.snake_to_camel('abcd') == 'abcd'
+	assert case.snake_to_camel('a_bcd') == 'aBcd'
+	assert case.snake_to_camel('abc_d') == 'abcD'
+
+	assert case.snake_to_kabab('abcd') == 'abcd'
+	assert case.snake_to_kabab('a_bcd') == 'a-bcd'
+	assert case.snake_to_kabab('abc_d') == 'abc-d'
+
+	assert case.snake_to_kabab_upper('abcd') == 'ABCD'
+	assert case.snake_to_kabab_upper('a_bcd') == 'A-BCD'
+	assert case.snake_to_kabab_upper('abc_d') == 'ABC-D'
+
+	assert case.snake_to_pascal('abcd') == 'Abcd'
+	assert case.snake_to_pascal('a_bcd') == 'ABcd'
+	assert case.snake_to_pascal('abc_d') == 'AbcD'
+
+	assert case.snake_to_phrase('abcd') == 'abcd'
+	assert case.snake_to_phrase('a_bcd') == 'a bcd'
+	assert case.snake_to_phrase('abc_d') == 'abc d'
+
+	assert case.snake_to_phrase_title('abcd') == 'Abcd'
+	assert case.snake_to_phrase_title('a_bcd') == 'A Bcd'
+	assert case.snake_to_phrase_title('abc_d') == 'Abc D'
 }
