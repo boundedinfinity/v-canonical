@@ -29,14 +29,3 @@ pub fn parse(s string) ?Case {
 		else { return none }
 	}
 }
-
-// pub fn convert(from Case, to Case, s string) string {
-// 	mut cs := strings.String(s)
-
-// 	match from {
-// 		.camel { cs = cs.camel_to_phrase() }
-// 		else {}
-// 	}
-
-// 	return v
-// }
