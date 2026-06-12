@@ -7,12 +7,13 @@ fn test_categorycase_parse() {
 		name: 'General'
 	}
 
-	prefix := affix.Prefix{
+	actual := affix.Prefix{
 		name:          'Mister'
 		abbreviations: ['Mr']
 		category:      category
 	}
 
-	assert prefix.matches('mister') == true
-	assert prefix.matches('mr') == true
+	assert actual.matches('mister') == true
+	assert actual.matches('mr') == true
 }
+

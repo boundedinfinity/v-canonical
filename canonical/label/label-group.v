@@ -2,15 +2,16 @@ module label
 
 import canonical.id
 
-pub struct Label {
+pub struct LabelGroup {
 pub mut:
 	id            id.Id
 	name          string
 	abbreviations ?[]string
 	description   ?string
+	labels        ?[]Label
 }
 
-pub fn (this Label) matches(term string) bool {
+pub fn (this LabelGroup) matches(term string) bool {
 	lower := term.to_lower()
 
 	if this.name.to_lower() == lower {
@@ -18,7 +19,15 @@ pub fn (this Label) matches(term string) bool {
 	}
 
 	if abbrev := this.abbreviations {
-		return abbrev.any(it.to_lower() == lower)
+		if abbrev.any(it.to_lower() == lower) {
+			return true
+		}
+	}
+
+	if labels := this.labels {
+		if labels.any(it.matches(term)) {
+			return true
+		}
 	}
 
 	return false
