@@ -22,15 +22,11 @@ pub fn (mut this Name) add_first(name string) {
 }
 
 pub fn (mut this Name) add_middle(name string) {
-	if name !in this.middle {
-		this.middle << name
-	}
+	add_name(mut this.middle, name)
 }
 
 pub fn (mut this Name) add_last(name string) {
-	if name !in this.last {
-		this.last << name
-	}
+	add_name(mut this.last, name)
 }
 
 pub fn (this Name) fullname() string {
@@ -50,5 +46,6 @@ pub fn (this Name) fullname() string {
 
 	return full_names.join(' ')
 }
+
 
 
