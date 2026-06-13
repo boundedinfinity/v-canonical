@@ -3,8 +3,9 @@ module affix
 import canonical.id
 
 struct Affix {
+pub:
+	id id.Id = id.new()
 pub mut:
-	id            id.Id
 	name          string @[required]
 	abbreviations ?[]string
 	description   ?string

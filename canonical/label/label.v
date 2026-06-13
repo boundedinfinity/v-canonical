@@ -3,9 +3,10 @@ module label
 import canonical.id
 
 pub struct Label {
+pub:
+	id id.Id = id.new()
 pub mut:
-	id            id.Id
-	name          string
+	name          string @[required]
 	abbreviations ?[]string
 	description   ?string
 }
@@ -23,4 +24,5 @@ pub fn (this Label) matches(term string) bool {
 
 	return false
 }
+
 

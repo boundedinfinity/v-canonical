@@ -5,7 +5,7 @@ import canonical.id
 pub struct LabelGroup {
 pub mut:
 	id            id.Id
-	name          string
+	name          string @[required]
 	abbreviations ?[]string
 	description   ?string
 	labels        ?[]Label
@@ -32,4 +32,5 @@ pub fn (this LabelGroup) matches(term string) bool {
 
 	return false
 }
+
 

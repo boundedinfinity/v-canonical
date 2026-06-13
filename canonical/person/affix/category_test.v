@@ -9,8 +9,5 @@ fn test_categorycase_parse() {
 
 	assert actual.name == 'General'
 	assert actual.matches('general') == true
+	assert actual.id.len == 36
 }
-
-
-
-

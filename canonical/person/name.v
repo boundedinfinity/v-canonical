@@ -3,11 +3,34 @@ module person
 import canonical.id
 
 pub struct Name {
+pub:
+	id id.Id = id.new()
 pub mut:
-	id     id.Id
-	first  ?[]string
-	middle ?[]string
-	last   ?[]string
+	first  []string = []
+	middle []string = []
+	last   []string = []
+}
+
+fn add_name(mut names []string, name string) {
+	if name !in names {
+		names << name
+	}
+}
+
+pub fn (mut this Name) add_first(name string) {
+	add_name(mut this.first, name)
+}
+
+pub fn (mut this Name) add_middle(name string) {
+	if name !in this.middle {
+		this.middle << name
+	}
+}
+
+pub fn (mut this Name) add_last(name string) {
+	if name !in this.last {
+		this.last << name
+	}
 }
 
 pub fn (this Name) fullname() string {
@@ -28,7 +51,4 @@ pub fn (this Name) fullname() string {
 	return full_names.join(' ')
 }
 
-pub struct NameFormatter {
-pub:
-	pattern string
-}
+
