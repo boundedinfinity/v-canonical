@@ -1,10 +1,10 @@
-module person
+module name
 
-import canonical.id
+import canonical.id as cid
 
 pub struct Name {
 pub:
-	id id.Id = id.new()
+	id cid.Id = cid.new()
 pub mut:
 	first  []string = []
 	middle []string = []
@@ -46,6 +46,5 @@ pub fn (this Name) fullname() string {
 
 	return full_names.join(' ')
 }
-
 
 

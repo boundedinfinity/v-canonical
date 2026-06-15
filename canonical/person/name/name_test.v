@@ -1,13 +1,13 @@
-module person_test
+module name_test
 
-import canonical.person
-import canonical.id
+import canonical.person.name
+import canonical.id as cid
 
 fn test_name() {
-	aid := id.new()
+	id := cid.new()
 
-	mut actual := person.Name{
-		id:    aid
+	mut actual := name.Name{
+		id:    id
 		first: ['John']
 		last:  ['Smith']
 	}
@@ -18,6 +18,3 @@ fn test_name() {
 	actual.add_first('X')
 	assert actual.fullname() == 'John X Smith'
 }
-
-
-
