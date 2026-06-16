@@ -5,6 +5,7 @@ import canonical.id as cid
 
 fn test_name() {
 	repo := name.new_repo_sqlite(':memory:') or { panic(err) }
+	// repo := name.new_repo_sqlite('names.db') or { panic(err) }
 	defer {
 		repo.close() or {}
 	}

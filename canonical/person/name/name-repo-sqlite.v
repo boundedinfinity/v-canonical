@@ -44,29 +44,17 @@ pub fn (this NameRepositorySqlite) get(id cid.Id) !Name {
 		return error('name ${id} found duplicates')
 	}
 
-	firsts := sql this.db {
+	name.first << sql this.db {
 		select from NameFirstDb where person_id == id order by index
-	}!
+	}!.map(|row| row.name)
 
-	for first in firsts {
-		name.first << first.name
-	}
-
-	middles := sql this.db {
+	name.middle << sql this.db {
 		select from NameMiddleDb where person_id == id order by index
-	}!
+	}!.map(|row| row.name)
 
-	for middle in middles {
-		name.middle << middle.name
-	}
-
-	lasts := sql this.db {
+	name.last << sql this.db {
 		select from NameLastDb where person_id == id order by index
-	}!
-
-	for last in lasts {
-		name.last << last.name
-	}
+	}!.map(|row| row.name)
 
 	return name
 }
@@ -76,38 +64,50 @@ pub fn (this NameRepositorySqlite) save(name Name) ! {
 		id: name.id
 	}
 
-	mut firsts := []NameFirstDb{}
+	sql this.db {
+		insert name_db into NameDb
+	}!
 
-	for i, nname in name.first {
-		firsts << NameFirstDb{
+	mut first := []NameFirstDb{}
+
+	for i, n in name.first {
+		first << NameFirstDb{
 			person_id: name.id
 			index:     i
-			name:      nname
-		}
-	}
-
-	mut middles := []NameMiddleDb{}
-
-	for i, nname in name.first {
-		middles << NameMiddleDb{
-			person_id: name.id
-			index:     i
-			name:      nname
-		}
-	}
-
-	mut lasts := []NameLastDb{}
-
-	for i, nname in name.first {
-		lasts << NameLastDb{
-			person_id: name.id
-			index:     i
-			name:      nname
+			name:      n
 		}
 	}
 
 	sql this.db {
-		insert name_db into NameDb
+		insert first into NameFirstDb
+	}!
+
+	mut middle := []NameMiddleDb{}
+
+	for i, n in name.middle {
+		middle << NameMiddleDb{
+			person_id: name.id
+			index:     i
+			name:      n
+		}
+	}
+
+	sql this.db {
+		insert middle into NameMiddleDb
+	}!
+
+	mut last := []NameLastDb{}
+
+	for i, n in name.last {
+		last << NameLastDb{
+			person_id: name.id
+			index:     i
+			name:      n
+		}
+	}
+
+	sql this.db {
+		insert last into NameLastDb
 	}!
 }
 
@@ -117,30 +117,23 @@ pub:
 	id string @[required]
 }
 
-@[table: 'person_name_first']
+@[table: 'person_name__first']
 struct NameFirstDb {
-pub:
-	person_id string @[fkey: 'person_name.id'; required]
+	person_id string @[fkey: 'person__name.id'; required]
 	index     int    @[required]
 	name      string @[required]
 }
 
-@[table: 'person_name_middle']
+@[table: 'person_name__middle']
 struct NameMiddleDb {
-pub:
-	person_id string @[fkey: 'person_name.id'; required]
+	person_id string @[fkey: 'person__name.id'; required]
 	index     int    @[required]
 	name      string @[required]
 }
 
-@[table: 'person_name_last']
+@[table: 'person_name__last']
 struct NameLastDb {
-pub:
-	person_id string @[fkey: 'person_name.id'; required]
+	person_id string @[fkey: 'person__name.id'; required]
 	index     int    @[required]
 	name      string @[required]
 }
-
-
-
-
