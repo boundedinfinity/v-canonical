@@ -4,7 +4,7 @@ import canonical.id
 
 pub struct Label {
 pub:
-	id id.Id = id.new()
+	id id.Id = id.new() @[required]
 pub mut:
 	name          string @[required]
 	abbreviations ?[]string
@@ -24,5 +24,3 @@ pub fn (this Label) matches(term string) bool {
 
 	return false
 }
-
-
