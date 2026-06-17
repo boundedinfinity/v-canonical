@@ -3,9 +3,7 @@ module label
 import canonical.id as cid
 import db.sqlite
 
-pub fn new_repo_sqlite(path string) !&LabelRepositorySqlite {
-	db := sqlite.connect(path)!
-
+pub fn new_repo_sqlite(db sqlite.DB) !&LabelRepositorySqlite {
 	sql db {
 		create table LabelDb
 		create table LabelAbbreviationDb
@@ -22,7 +20,6 @@ mut:
 }
 
 pub fn (mut this LabelRepositorySqlite) close() ! {
-	this.db.close()!
 }
 
 pub fn (this LabelRepositorySqlite) get(id cid.Id) !Label {
@@ -94,4 +91,6 @@ struct LabelAbbreviationDb {
 	index        int    @[required]
 	abbreviation string @[required]
 }
+
+
 

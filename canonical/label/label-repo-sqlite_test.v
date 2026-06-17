@@ -1,12 +1,14 @@
 module label_test
 
 import canonical.label
+import db.sqlite
 
 fn test_label_repository_sqlite() {
-	repo := label.new_repo_sqlite(':memory:') or { panic(err) }
+	mut db := sqlite.connect(':memory:')!
+	repo := label.new_repo_sqlite(db) or { panic(err) }
 
 	defer {
-		repo.close() or {}
+		db.close() or {}
 	}
 
 	mut actual := label.Label{
@@ -25,5 +27,4 @@ fn test_label_repository_sqlite() {
 	assert actual.abbreviations == loaded.abbreviations
 	assert actual.description? == loaded.description?
 }
-
 

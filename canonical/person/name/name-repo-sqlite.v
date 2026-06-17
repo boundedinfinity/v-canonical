@@ -3,9 +3,7 @@ module name
 import canonical.id as cid
 import db.sqlite
 
-pub fn new_repo_sqlite(path string) !&NameRepositorySqlite {
-	db := sqlite.connect(path)!
-
+pub fn new_repo_sqlite(db sqlite.DB) !&NameRepositorySqlite {
 	sql db {
 		create table NameDb
 		create table NameFirstDb
@@ -24,7 +22,6 @@ mut:
 }
 
 pub fn (mut this NameRepositorySqlite) close() ! {
-	this.db.close()!
 }
 
 pub fn (this NameRepositorySqlite) get(id cid.Id) !Name {
