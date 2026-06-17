@@ -1,8 +1,9 @@
-module label
+module name
 
 import canonical.id as cid
 
 pub interface Repository {
-	get(cid.Id) !Label
-	save(Label) !
+	get(cid.Id) !Name
+	save(Name) !
 }
+

@@ -1,8 +1,11 @@
 module person
 
 import canonical.person.name
+import canonical.id
 
-struct Person {
+pub struct Person {
+pub:
+	id id.Id = id.new() @[required]
 pub mut:
-	Name name.Name
+	name name.Name
 }

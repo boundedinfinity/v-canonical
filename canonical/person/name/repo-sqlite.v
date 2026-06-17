@@ -3,7 +3,7 @@ module name
 import canonical.id as cid
 import db.sqlite
 
-pub fn new_repo_sqlite(db sqlite.DB) !&NameRepositorySqlite {
+pub fn new_repo_sqlite(db sqlite.DB) !&Repository {
 	sql db {
 		create table NameDb
 		create table NameFirstDb
@@ -11,20 +11,20 @@ pub fn new_repo_sqlite(db sqlite.DB) !&NameRepositorySqlite {
 		create table NameLastDb
 	}!
 
-	return &NameRepositorySqlite{
+	return &RepositorySqlite{
 		db: db
 	}
 }
 
-struct NameRepositorySqlite {
+struct RepositorySqlite {
 mut:
 	db sqlite.DB
 }
 
-pub fn (mut this NameRepositorySqlite) close() ! {
+pub fn (mut this RepositorySqlite) close() ! {
 }
 
-pub fn (this NameRepositorySqlite) get(id cid.Id) !Name {
+pub fn (this RepositorySqlite) get(id cid.Id) !Name {
 	mut name := Name{
 		id: id
 	}
@@ -56,7 +56,7 @@ pub fn (this NameRepositorySqlite) get(id cid.Id) !Name {
 	return name
 }
 
-pub fn (this NameRepositorySqlite) save(name Name) ! {
+pub fn (this RepositorySqlite) save(name Name) ! {
 	name_db := NameDb{
 		id: name.id
 	}
@@ -116,21 +116,22 @@ pub:
 
 @[table: 'person_name__first']
 struct NameFirstDb {
-	person_id string @[fkey: 'person__name.id'; required]
+	person_id string @[fkey: 'person_name.id'; required]
 	index     int    @[required]
 	name      string @[required]
 }
 
 @[table: 'person_name__middle']
 struct NameMiddleDb {
-	person_id string @[fkey: 'person__name.id'; required]
+	person_id string @[fkey: 'person_name.id'; required]
 	index     int    @[required]
 	name      string @[required]
 }
 
 @[table: 'person_name__last']
 struct NameLastDb {
-	person_id string @[fkey: 'person__name.id'; required]
+	person_id string @[fkey: 'person_name.id'; required]
 	index     int    @[required]
 	name      string @[required]
 }
+
