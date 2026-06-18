@@ -4,5 +4,3 @@ pub struct Formatter {
 pub:
 	pattern string
 }
-
-

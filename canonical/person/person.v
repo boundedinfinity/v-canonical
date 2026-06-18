@@ -1,7 +1,7 @@
 module person
 
-import canonical.person.name
 import canonical.id
+import canonical.person.name
 
 pub struct Person {
 pub:
