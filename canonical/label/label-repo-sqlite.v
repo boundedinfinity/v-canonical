@@ -1,28 +1,44 @@
 module label
 
 import canonical.id as cid
+import canonical.person as cperson
 import db.sqlite
 
-pub fn new_repo_sqlite(db sqlite.DB) !&LabelRepositorySqlite {
+pub fn new_repo_sqlite(db sqlite.DB) !&RepositorySqlite {
 	sql db {
 		create table LabelDb
 		create table LabelAbbreviationDb
+		create table Label_Person
 	}!
 
-	return &LabelRepositorySqlite{
+	return &RepositorySqlite{
 		db: db
 	}
 }
 
-struct LabelRepositorySqlite {
+struct RepositorySqlite {
 mut:
 	db sqlite.DB
 }
 
-pub fn (mut this LabelRepositorySqlite) close() ! {
+pub fn (mut this RepositorySqlite) close() ! {
 }
 
-pub fn (this LabelRepositorySqlite) get(id cid.Id) !Label {
+@[table: 'label']
+struct LabelDb {
+	id          string @[required]
+	name        string @[required]
+	description ?string
+}
+
+@[table: 'label__abbreviation']
+struct LabelAbbreviationDb {
+	label_id     string @[fkey: 'label.id'; required]
+	index        int    @[required]
+	abbreviation string @[required]
+}
+
+pub fn (this RepositorySqlite) get(id cid.Id) !Label {
 	label_dbs := sql this.db {
 		select from LabelDb where id == id
 	}!
@@ -52,7 +68,7 @@ pub fn (this LabelRepositorySqlite) get(id cid.Id) !Label {
 	return label
 }
 
-pub fn (this LabelRepositorySqlite) save(label Label) ! {
+pub fn (this RepositorySqlite) save(label Label) ! {
 	db := LabelDb{
 		id:          label.id.str()
 		name:        label.name
@@ -78,19 +94,19 @@ pub fn (this LabelRepositorySqlite) save(label Label) ! {
 	}!
 }
 
-@[table: 'label']
-struct LabelDb {
-	id          string @[required]
-	name        string @[required]
-	description ?string
+@[table: 'label__person']
+struct Label_Person {
+	label_id  string @[fkey: 'label.id'; required]
+	person_id string @[fkey: 'person.id'; required]
 }
 
-@[table: 'label__abbreviation']
-struct LabelAbbreviationDb {
-	label_id     string @[required]
-	index        int    @[required]
-	abbreviation string @[required]
+pub fn (this RepositorySqlite) save_person(person cperson.Person, label Label) ! {
+	dbo := Label_Person{
+		label_id:  label.id
+		person_id: person.id
+	}
+
+	sql this.db {
+		insert dbo into Label_Person
+	}!
 }
-
-
-

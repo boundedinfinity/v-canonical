@@ -27,4 +27,3 @@ fn test_name_repository_sqlite() {
 	assert actual.name.fullname() == loaded.name.fullname()
 }
 
-

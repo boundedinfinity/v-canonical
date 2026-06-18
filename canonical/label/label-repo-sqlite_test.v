@@ -1,30 +1,45 @@
 module label_test
 
 import canonical.label
+import canonical.person
+import canonical.person.name
 import db.sqlite
 
 fn test_label_repository_sqlite() {
 	mut db := sqlite.connect(':memory:')!
-	repo := label.new_repo_sqlite(db) or { panic(err) }
+	lrepo := label.new_repo_sqlite(db) or { panic(err) }
+	prepo := person.new_repo_sqlite(db) or { panic(err) }
 
 	defer {
 		db.close() or {}
 	}
 
-	mut actual := label.Label{
+	clabel := label.Label{
 		name:          'Database'
 		abbreviations: ['DB']
 		description:   'A database'
 	}
 
-	repo.save(actual)!
+	
 
-	loaded := repo.get(actual.id)!
+	lrepo.save(clabel)!
+	
 
-	assert actual.id == loaded.id
-	assert actual.name == loaded.name
-	assert actual.abbreviations?.len == loaded.abbreviations?.len
-	assert actual.abbreviations == loaded.abbreviations
-	assert actual.description? == loaded.description?
+	loaded := lrepo.get(clabel.id)!
+
+	assert clabel.id == loaded.id
+	assert clabel.name == loaded.name
+	assert clabel.abbreviations?.len == loaded.abbreviations?.len
+	assert clabel.abbreviations == loaded.abbreviations
+	assert clabel.description? == loaded.description?
+
+	cperson := person.Person{
+		name: name.Name{
+			first: ['John']
+			last:  ['Smith']
+		}
+	}
+
+	prepo.save(cperson)!
+	lrepo.save_person(cperson, clabel)!
 }
-
