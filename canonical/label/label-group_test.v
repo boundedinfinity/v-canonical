@@ -70,7 +70,7 @@ fn test_category_no_id() {
 	assert actual.matches('Label 3') == true
 	assert actual.matches('Label 4') == true
 	assert actual.matches('Label 5') == true
-	assert actual.matches('Label 7') == true
+	assert actual.matches('Label 6') == true
 }
 
 fn test_category_with_id() {
@@ -95,5 +95,6 @@ fn test_category_with_id() {
 	assert actual.matches('AutomaTion') == true
 	assert actual.id == aid
 }
+
 
 
