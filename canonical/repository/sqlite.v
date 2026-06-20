@@ -33,6 +33,12 @@ pub fn (this SqliteRepository) label() LabelSqlite {
 	}
 }
 
+pub fn (this SqliteRepository) label_group() LabelGroupSqlite {
+	return LabelGroupSqlite{
+		db: this.db
+	}
+}
+
 pub fn (this SqliteRepository) person() PersonSqlite {
 	return PersonSqlite{
 		db: this.db

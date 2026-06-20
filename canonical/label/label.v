@@ -24,3 +24,5 @@ pub fn (this Label) matches(term string) bool {
 
 	return false
 }
+
+pub type Labels = Label | []Label | LabelGroup

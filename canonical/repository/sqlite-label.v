@@ -41,7 +41,7 @@ pub fn (this LabelSqlite) get(id cid.Id) !clabel.Label {
 
 pub fn (this LabelSqlite) save(label clabel.Label) ! {
 	db := LabelDb{
-		id:          label.id.str()
+		id:          label.id
 		name:        label.name
 		description: label.description
 	}
@@ -54,7 +54,7 @@ pub fn (this LabelSqlite) save(label clabel.Label) ! {
 
 	for i, abbreviation in label.abbreviations {
 		abbreviation_dbs << LabelAbbreviationDb{
-			label_id:     label.id.str()
+			label_id:     label.id
 			index:        i
 			abbreviation: abbreviation
 		}

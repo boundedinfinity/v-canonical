@@ -3,8 +3,9 @@ module label
 import canonical.id
 
 pub struct LabelGroup {
+pub:
+	id id.Id = id.new() @[required]
 pub mut:
-	id            id.Id
 	name          string @[required]
 	abbreviations ?[]string
 	description   ?string
@@ -33,4 +34,21 @@ pub fn (this LabelGroup) matches(term string) bool {
 	return false
 }
 
+pub fn (mut this LabelGroup) add(labels Labels) {
+	mut current := if ls := this.labels { ls.clone() } else { []Label{} }
+
+	match labels {
+		Label {
+			current << labels
+		}
+		[]Label {
+			current << labels
+		}
+		LabelGroup {
+			current << labels.labels or { []Label{} }
+		}
+	}
+
+	this.labels = current
+}
 
